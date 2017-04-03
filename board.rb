@@ -24,7 +24,13 @@ class Board
     @board[row][col] = val
   end
 
-  # protected
+  def move_piece(start_pos, end_pos)
+    raise "No piece at start position" if self[start_pos].is_a?(NullPiece)
+    raise "Piece cannot move to end position" unless self[end_pos].is_a?(NullPiece)
+    self[start_pos], self[end_pos] = @null_piece, self[start_pos]
+  end
+
+  protected
 
   def place_piece(positions, piece)
     positions.each do |pos|
@@ -54,7 +60,7 @@ class Board
     end
     (2..5).each do |row|
       (0..7).each do |col|
-        self[[row, col]] = @null_piece 
+        self[[row, col]] = @null_piece
       end
     end
   end
