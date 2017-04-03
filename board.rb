@@ -6,8 +6,11 @@ require_relative 'pieces/nullpiece'
 require_relative 'pieces/pawn'
 require_relative 'pieces/queen'
 require_relative 'pieces/rook'
+require_relative 'display'
 
 class Board
+  attr_reader :board
+  
   def initialize
     @null_piece = NullPiece.instance
     @board = Array.new(8) { Array.new(8, nil) }
