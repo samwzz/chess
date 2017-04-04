@@ -12,7 +12,9 @@ class Display
   end
 
   def render
+    puts "   #{(0..7).to_a.join("  ")}"
     @board.each_with_index do |row, i|
+      print "#{i} "
       row.each.with_index do |piece, j|
         if @cursor.cursor_pos == [i,j]
           print " #{piece.to_s} ".colorize(:color => :white, :background => :red)

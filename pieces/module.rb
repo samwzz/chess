@@ -92,7 +92,7 @@ module Stepable
       moves << [current_pos[0] + dx, current_pos[1] + dy]
     end
     moves.select { |move| move.all? { |pos| pos.between?(0, 7) } }.select do |move|
-      self.board[move].is_a?(NullPiece)
+      self.board[move].is_a?(NullPiece) || self.board[move].color != self.color
     end
   end
 
