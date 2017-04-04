@@ -42,21 +42,10 @@ class Board
   end
 
   def make_starting_grid
-    # rook_positions = [[0,0], [0,7], [7,0], [7,7]]
-    # knight_positions = [[0,1], [0,6], [7,1], [7,6]]
-    # bishop_positions = [[0,2], [0,5], [7,3], [7,2]]
-    # king_positions = [[0,3], [7,3]]
-    # queen_positions = [[0,4], [7,4]]
-    # pawn_positions = (0..7).map { |n| [1,n] }
-    # pawn_positions += (0..7).map { |n| [6,n] }
-    pieces = [Rook.new, Knight.new, Bishop.new, King.new, Queen.new, Bishop.new,
-              Knight.new, Rook.new]
+    pieces = %w(Rook Knight Bishop King Queen Bishop Knight Rook)
     [0, 7].each do |row|
       pieces.each_with_index do |piece, col|
-        new_piece = piece
-        new_piece.board = self
-        new_piece.pos = [row, col]
-        self[[row, col]] = new_piece
+        self[[row, col]] = Object.const_get(piece).new([row, col], self)
       end
     end
     [1, 6].each do |row|
