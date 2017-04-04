@@ -12,6 +12,10 @@ class Piece
     self.class.to_s[0].to_sym
   end
 
+  def valid_moves
+
+  end
+
   def to_s
     case symbol
     when :K
@@ -25,6 +29,12 @@ class Piece
     when :P
       @color == :W ? "\u2659" : "\u265F"
     end
+  end
+
+private
+
+  def move_into_check(to_pos)
+    dup_board = @board.dup
   end
 
 end
