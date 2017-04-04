@@ -5,7 +5,7 @@ class Knight < Piece
 include Stepable
 
   def to_s
-    "N"
+    @color == :W ? "\u2658" : "\u265E"
   end
 
 end

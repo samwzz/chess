@@ -3,25 +3,55 @@ require 'byebug'
 module Slideable
 
   def moves
-
+    move_dirs
   end
 
   private
 
   def move_dirs
+    if self.is_a?(Bishop)
+      current_pos = self.pos
+      all_pos = []
+      debugger
+      diagonal_dirs.each do |dx, dy|
+        new_pos = [current_pos[0] + dx, current_pos[1] + dy]
+        while grow_unblocked_moves_in_dir(new_pos[0], new_pos[1])
+          debugger
+          all_pos << new_pos
+          new_pos[0] += dx
+          new_pos[1] += dy
+        end
+        if new_pos.all? { |el| el.between?(0, 7) }
+          all_pos << new_pos unless self.board[new_pos].color == self.color
+        end
+      end
+      all_pos
+    end
+  end
+
+  def available(pos)
 
   end
 
   def horizontal_dirs
-
+    dir_change = [[1,0],[-1,0],[0,1],[0,-1]]
   end
 
   def diagonal_dirs
-
+    dir_change = [[-1,-1,],[1,-1],[-1,1],[1,1]]
+    return dir_change
   end
 
-  def gor_unblocked_moves_in_dir(dx, dy)
-
+  def grow_unblocked_moves_in_dir(dx, dy)
+    return false unless [dx, dy].all? {|el| el.between?(0, 7)}
+    new_pos = [dx, dy]
+    if self.board[new_pos].color.nil?
+      true
+    elsif self.board[new_pos].color == self.color
+      false
+    else
+      false
+    end
   end
 
 end

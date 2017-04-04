@@ -13,7 +13,18 @@ class Piece
   end
 
   def to_s
-    symbol.to_s
+    case symbol
+    when :K
+      @color == :W ? "\u2654" : "\u265A"
+    when :Q
+      @color == :W ? "\u2655" : "\u265B"
+    when :R
+      @color == :W ? "\u2656" : "\u265C"
+    when :B
+      @color == :W ? "\u2657" : "\u265D"
+    when :P
+      @color == :W ? "\u2659" : "\u265F"
+    end
   end
 
 end
