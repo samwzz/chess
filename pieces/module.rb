@@ -12,12 +12,13 @@ module Slideable
     if self.is_a?(Bishop)
       current_pos = self.pos
       all_pos = []
-      debugger
+
       diagonal_dirs.each do |dx, dy|
-        new_pos = [current_pos[0] + dx, current_pos[1] + dy]
+        #debugger
+        new_pos = [(current_pos[0] + dx), (current_pos[1] + dy)]
         while grow_unblocked_moves_in_dir(new_pos[0], new_pos[1])
-          debugger
-          all_pos << new_pos
+          # debugger
+          all_pos << new_pos.dup
           new_pos[0] += dx
           new_pos[1] += dy
         end
@@ -26,7 +27,7 @@ module Slideable
         end
       end
       all_pos
-    end
+    elsif self.is_a?()
   end
 
   def available(pos)
@@ -38,11 +39,12 @@ module Slideable
   end
 
   def diagonal_dirs
-    dir_change = [[-1,-1,],[1,-1],[-1,1],[1,1]]
+    dir_change = [[-1,-1],[1,-1],[-1,1],[1,1]]
     return dir_change
   end
 
   def grow_unblocked_moves_in_dir(dx, dy)
+    #debugger
     return false unless [dx, dy].all? {|el| el.between?(0, 7)}
     new_pos = [dx, dy]
     if self.board[new_pos].color.nil?

@@ -30,7 +30,7 @@ class Board
   def move_piece(start_pos, end_pos)
     raise "No piece at start position" if self[start_pos].is_a?(NullPiece)
     raise "Piece cannot move to end position" unless self[end_pos].is_a?(NullPiece)
-    self[start_pos], self[end_pos] = @null_piece, self[start_pos]
+    self[start_pos].pos, self[start_pos], self[end_pos],  = end_pos, @null_piece, self[start_pos] 
   end
 
   protected
@@ -42,7 +42,7 @@ class Board
   end
 
   def make_starting_grid
-    pieces = %w(Rook Knight Bishop King Queen Bishop Knight Rook)
+    pieces = %w(Rook Knight Bishop Queen King Bishop Knight Rook)
     [0, 7].each do |row|
       pieces.each_with_index do |piece, col|
         self[[row, col]] = Object.const_get(piece).new([row, col], self)

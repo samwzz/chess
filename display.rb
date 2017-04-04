@@ -18,7 +18,7 @@ class Display
           print " #{piece.to_s} ".colorize(:color => :white, :background => :red)
         else
 
-          if (i + j).even?
+          if (i + j).odd?
             print " #{piece.to_s} ".colorize(:background => :white)
           else
             print " #{piece.to_s} ".colorize(:background => :gray)
