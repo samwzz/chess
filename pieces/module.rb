@@ -3,31 +3,55 @@ require 'byebug'
 module Slideable
 
   def moves
-    move_dirs
+    # debugger
+    if self.is_a?(Bishop)
+      move_dirs(diagonal_dirs, self.pos)
+    elsif self.is_a?(Rook)
+      move_dirs(horizontal_dirs, self.pos)
+    elsif self.is_a?(Queen)
+      move_dirs(diagonal_dirs + horizontal_dirs, self.pos)
+    end
   end
 
   private
 
-  def move_dirs
-    if self.is_a?(Bishop)
-      current_pos = self.pos
-      all_pos = []
-
-      diagonal_dirs.each do |dx, dy|
-        #debugger
-        new_pos = [(current_pos[0] + dx), (current_pos[1] + dy)]
-        while grow_unblocked_moves_in_dir(new_pos[0], new_pos[1])
-          # debugger
-          all_pos << new_pos.dup
-          new_pos[0] += dx
-          new_pos[1] += dy
-        end
-        if new_pos.all? { |el| el.between?(0, 7) }
-          all_pos << new_pos unless self.board[new_pos].color == self.color
-        end
+  def move_dirs(dirs, pos)
+    current_pos = pos
+    all_pos = []
+    # debugger
+    dirs.each do |dx, dy|
+      new_pos = [(current_pos[0] + dx), (current_pos[1] + dy)]
+      while grow_unblocked_moves_in_dir(new_pos[0], new_pos[1])
+        all_pos << new_pos.dup
+        new_pos[0] += dx
+        new_pos[1] += dy
       end
-      all_pos
-    elsif self.is_a?()
+      if new_pos.all? { |el| el.between?(0, 7) }
+        all_pos << new_pos unless self.board[new_pos].color == self.color
+      end
+    end
+    all_pos
+
+
+  #   if self.is_a?(Bishop)
+  #     current_pos = self.pos
+  #     all_pos = []
+  #
+  #     diagonal_dirs.each do |dx, dy|
+  #       #debugger
+  #       new_pos = [(current_pos[0] + dx), (current_pos[1] + dy)]
+  #       while grow_unblocked_moves_in_dir(new_pos[0], new_pos[1])
+  #         # debugger
+  #         all_pos << new_pos.dup
+  #         new_pos[0] += dx
+  #         new_pos[1] += dy
+  #       end
+  #       if new_pos.all? { |el| el.between?(0, 7) }
+  #         all_pos << new_pos unless self.board[new_pos].color == self.color
+  #       end
+  #     end
+  #     all_pos
+  #   elsif self.is_a?()
   end
 
   def available(pos)
