@@ -15,9 +15,14 @@ class Display
     @board.each_with_index do |row, i|
       row.each.with_index do |piece, j|
         if @cursor.cursor_pos == [i,j]
-          print "#{piece.to_s.colorize(:color => :white, :background => :red)} "
+          print " #{piece.to_s} ".colorize(:color => :white, :background => :red)
         else
-          print "#{piece.to_s} "
+
+          if (i + j).even?
+            print " #{piece.to_s} ".colorize(:background => :white)
+          else
+            print " #{piece.to_s} ".colorize(:background => :gray)
+          end
         end
       end
       puts "\n"
