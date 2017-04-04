@@ -10,7 +10,7 @@ require_relative 'display'
 
 class Board
   attr_reader :board
-  
+
   def initialize
     @null_piece = NullPiece.instance
     @board = Array.new(8) { Array.new(8, nil) }
@@ -53,12 +53,15 @@ class Board
               Knight.new, Rook.new]
     [0, 7].each do |row|
       pieces.each_with_index do |piece, col|
-        self[[row, col]] = piece
+        new_piece = piece
+        new_piece.board = self
+        new_piece.pos = [row, col]
+        self[[row, col]] = new_piece
       end
     end
     [1, 6].each do |row|
       (0..7).each do |col|
-        self[[row, col]] = Pawn.new
+        self[[row, col]] = Pawn.new([row, col], self)
       end
     end
     (2..5).each do |row|

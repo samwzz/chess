@@ -1,6 +1,10 @@
 class Piece
-  def initialize
 
+  attr_accessor :pos, :board
+
+  def initialize(pos = nil, board = nil)
+    @pos = pos
+    @board = board
   end
 
   def symbol
@@ -10,4 +14,5 @@ class Piece
   def to_s
     symbol.to_s
   end
+
 end
