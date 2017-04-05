@@ -29,17 +29,33 @@ class Board
 
   def move_piece(start_pos, end_pos)
     raise "No piece at start position" if self[start_pos].is_a?(NullPiece)
-    raise "Piece cannot move to end position" unless self[end_pos].is_a?(NullPiece)
-    self[start_pos].pos, self[start_pos], self[end_pos],  = end_pos, @null_piece, self[start_pos]
+    #raise "Piece cannot move to end position" unless self[end_pos].is_a?(NullPiece)
+    self[start_pos].pos, self[start_pos], self[end_pos] = end_pos, @null_piece, self[start_pos]
+  end
+
+  def check_mate?(color)
+    if in_check?(color)
+      board.each do |row|
+        row.each do |piece|
+          if piece.color == color
+            return false if piece.valid_moves.count >= 1
+          end
+        end
+      end
+      true
+    end
   end
 
   def in_check?(color)
     king_pos = find_king(color)
     board.each do |row|
       row.each do |piece|
-        if piece.color != color && !piece.is_a?(NullPiece)
-          if piece.moves.include?(king_pos)
-            return true
+        # debugger
+        unless piece.is_a?(NullPiece)
+          if piece.color != color
+            if piece.moves.include?(king_pos)
+              return true
+            end
           end
         end
       end
@@ -48,13 +64,14 @@ class Board
   end
 
   def dup
-    new_board = Array.new(8) { Array.new(8, nil) }
+    new_board = Board.new
     @board.each_with_index do |row, i|
       row.each_with_index do |piece, j|
         if piece.is_a?(NullPiece)
-          new_board[i][j] = piece
+          new_board[[i, j]] = piece
         else
-          new_board[i][j] = piece.dup
+          new_board[[i, j]] = piece.dup
+          new_board[[i, j]].board = new_board
         end
       end
     end

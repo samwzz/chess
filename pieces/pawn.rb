@@ -1,4 +1,5 @@
 require_relative 'piece'
+require 'byebug'
 
 class Pawn < Piece
 
@@ -49,7 +50,12 @@ protected
   end
 
   def enemy_space?(pos)
-    return true unless board[pos].color == self.color || board[pos].is_a?(NullPiece)
+    unless board[pos].is_a?(NullPiece)
+      # debugger
+      if pos.all? { |el| el.between?(0, 7) }
+        return true unless board[pos].color == self.color
+      end
+    end
     false
   end
 

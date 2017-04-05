@@ -13,7 +13,7 @@ class Piece
   end
 
   def valid_moves
-
+    self.moves.reject { |move| move_into_check?(move) }
   end
 
   def to_s
@@ -33,8 +33,11 @@ class Piece
 
 private
 
-  def move_into_check(to_pos)
+  def move_into_check?(to_pos)
     dup_board = @board.dup
+    color = self.color
+    dup_board.move_piece(@pos, to_pos)
+    dup_board.in_check?(color)
   end
 
 end
